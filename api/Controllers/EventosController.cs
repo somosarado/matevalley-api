@@ -6,7 +6,6 @@ namespace api.Controllers
     [Route("[controller]")]
     public class EventosController : ControllerBase
     {
-       
         private readonly ILogger<EventosController> _logger;
 
         public EventosController(ILogger<EventosController> logger)
