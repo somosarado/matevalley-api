@@ -152,7 +152,7 @@ namespace api.Controllers
                         $"o acerquese a alguien del staff de Matevalley e informe el numero {idAssitant}";
                     return assistantDto;
                 }
-                assistantDB.PrintedSuccessful = 1;
+                assistantDB.Calification = 1;
 
                 var r = _context.SaveChanges();
                 if (r == 1)
