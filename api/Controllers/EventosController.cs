@@ -165,12 +165,12 @@ namespace api.Controllers
                         $"o acerquese a alguien del staff de Matevalley e informe el numero {idAssitant}";
                     return assistantDto;
                 }
-                assistantDB.Calification = 1;
+                assistantDB.Calification = rate;
 
                 var r = _context.SaveChanges();
                 if (r == 1)
                 {
-                    assistantDto.Calification = rate;
+                    assistantDto.Success = true;
                 }
                 else
                 {
