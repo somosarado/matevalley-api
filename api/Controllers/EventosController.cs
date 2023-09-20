@@ -221,8 +221,6 @@ namespace api.Controllers
         {
             try
             {
-                
-
                 var assistantToAdd = _mapper.Map<Assistant>(assistantDTO);
 
 
