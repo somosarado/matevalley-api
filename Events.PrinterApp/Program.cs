@@ -13,11 +13,15 @@ namespace Events.PrinterApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async System.Threading.Tasks.Task Main(string[] args)
         {
+            while (true)
+            {
+                Label label = new Label();
+                await label.Generate();
+            }
 
-            Label label = new Label();
-            label.Generate();
+            
             //string wordPath = "C:\\Users\\rmore\\OneDrive\\Projects\\MateValley\\Repos\\Api\\Events.PrinterApp\\Resources\\labelEdit.docx";
             //// Create a new instance of Microsoft Word
             //Application wordApp = new Application();

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Office.Interop.Word;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +14,61 @@ namespace Events.PrinterApp
     public class Label
     {
 
-        public void Generate()
+        public async System.Threading.Tasks.Task Generate()
         {
             //get labels for print
+            var labels = await this.GetLabels();
+            if(labels == null)
+                return;
+            foreach (var label in labels)
+            {
+                //generate word
+                GenerateWordPrint(label.Id, label.Name);
+            }
+          
+            
+        
+        
+        }
 
-            //generate word
-            GenerateWordPrint(1, "Clara");
-            //print
+        private async Task<List<Assistant>>  GetLabels()
+        {
+            try
+            {
+                string url = "https://localhost:7169/Eventos/GetLabelsForPrint";
+                var httpClientHandler = new HttpClientHandler();
+
+                httpClientHandler.ServerCertificateCustomValidationCallback =
+                (message, cert, chain, errors) => { return true; };
+
+                using (HttpClient client = new HttpClient(httpClientHandler))
+                {
+                    //ErrorLog += $"Inicio is proccesing con url {url}";
+                    //client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
+                    client.DefaultRequestHeaders.Accept.TryParseAdd("application/json");
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+                   // ErrorLog += $"Hice Get Async";
+                    string data = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                       // ErrorLog += $"Recibi data";
+                        var datos = JsonConvert.DeserializeObject<List<Assistant>>(data);
+                        return datos;
+                    }
+                    else
+                    {
+                       // ErrorLog += $"Recibi error";
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //ErrorLog += $"Error Ejecutando get order {ex.Message}";
+                return null;
+            }
         }
 
         public void GenerateWordPrint(int id, string name)
