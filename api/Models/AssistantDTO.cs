@@ -1,7 +1,11 @@
-﻿namespace api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace api.Models
 {
     public class AssistantDTO : BaseDTO
     {
+ 
         public int Id { get; set; }
 
         public string Name { get; set; }

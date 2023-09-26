@@ -243,7 +243,7 @@ namespace api.Controllers
             {
                 assistantDTO.Success = false;
                 assistantDTO.Message = "Incidencia registrandose en el evento, por favor reintente " +
-                    "o acerquese a alguien del staff de Matevalley";
+                    "o acerquese a alguien del staff de Matevalley: " + ex.Message + ": " + ex.InnerException;
 
             }
             return assistantDTO;
