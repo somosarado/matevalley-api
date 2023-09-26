@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class EventosController : ControllerBase
     {
         private readonly ILogger<EventosController> _logger;
@@ -165,12 +165,12 @@ namespace api.Controllers
                         $"o acerquese a alguien del staff de Matevalley e informe el numero {idAssitant}";
                     return assistantDto;
                 }
-                assistantDB.Calification = 1;
+                assistantDB.Calification = rate;
 
                 var r = _context.SaveChanges();
                 if (r == 1)
                 {
-                    assistantDto.Calification = rate;
+                    assistantDto.Success = true;
                 }
                 else
                 {
@@ -221,8 +221,6 @@ namespace api.Controllers
         {
             try
             {
-                
-
                 var assistantToAdd = _mapper.Map<Assistant>(assistantDTO);
 
 
